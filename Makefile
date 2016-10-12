@@ -15,10 +15,10 @@ LDFLAGS=-lrt -ldl -lpthread $(POLYDIR)Core/lib/libPolycore.a $(POLYDIR)Core/Depe
 #LDFLAGS=-lrt -ldl -lpthread -L$(POLYDIR)Core/lib/ -L$(POLYDIR)Core/Dependencies/lib/ -lGL -lGLU -lSDL -L$(POLYDIR)Modules/lib/ -L$(POLYDIR)Modules/Dependencies/lib/ -lX11
 
 
-default: 2DPhysics_Basic
+default: BlockTower
 
 clean:
-	rm 2DPhysics_Basic
+	rm BlockTower
 
-2DPhysics_Basic:
-	$(CC) $(CFLAGS) -I./Contents/2DPhysics_Basic main.cpp Contents/2DPhysics_Basic/HelloPolycodeApp.cpp -o 2DPhysics_Basic $(LDFLAGS)
+BlockTower:
+	$(CC) $(CFLAGS) main.cpp HelloPolycodeApp.cpp -o BlockTower $(LDFLAGS)
