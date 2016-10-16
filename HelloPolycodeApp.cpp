@@ -2,6 +2,8 @@
 
 HelloPolycodeApp::HelloPolycodeApp(PolycodeView *view) {
 
+	srand(time(0));
+
 	core = new POLYCODE_CORE(view, 640,480,false,true,0,0,90, 0, true);
 
 	PhysicsScene2D *scene = new PhysicsScene2D(0.1, 60);	
@@ -24,4 +26,6 @@ HelloPolycodeApp::~HelloPolycodeApp() {
 
 bool HelloPolycodeApp::Update() {
     return core->updateAndRender();
+
+	
 }
