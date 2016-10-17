@@ -21,4 +21,4 @@ clean:
 	rm BlockTower
 
 BlockTower:
-	$(CC) $(CFLAGS) main.cpp HelloPolycodeApp.cpp -o BlockTower $(LDFLAGS)
+	@$(CC) $(CFLAGS) main.cpp BlockTowerApp.cpp -o BlockTower $(LDFLAGS)

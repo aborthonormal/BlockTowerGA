@@ -1,6 +1,6 @@
 #include "Polycode.h"
 #include "PolycodeView.h"
-#include "HelloPolycodeApp.h"
+#include "BlockTowerApp.h"
 
 int main(int argc, char *argv[]) {
 
@@ -8,10 +8,10 @@ int main(int argc, char *argv[]) {
 	PolycodeView *view = new PolycodeView("Block Tower GA");
 
 	//Create new instance of app, using the created PolycodeView.  
-	HelloPolycodeApp *app = new HelloPolycodeApp(view);
+	BlockTowerApp *app = new BlockTowerApp(view);
 
 	//Run the app until exit. 
-	while(app->Update()) {}
+	while(app->update()) {}
 
 	return 0;
 }

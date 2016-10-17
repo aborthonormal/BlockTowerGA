@@ -1,6 +1,6 @@
-#include "HelloPolycodeApp.h"
+#include "BlockTowerApp.h"
 
-HelloPolycodeApp::HelloPolycodeApp(PolycodeView *view) {
+BlockTowerApp::BlockTowerApp(PolycodeView *view) {
 
 	core = new POLYCODE_CORE(view, 640,480,false,true,0,0,90, 0, true);
 	PhysicsScene2D *scene = new PhysicsScene2D(0.1, 60, 60);
@@ -22,10 +22,6 @@ HelloPolycodeApp::HelloPolycodeApp(PolycodeView *view) {
 	PhysicsScene2DEntity * sceneEntity = scene->addPhysicsChild(shape, PhysicsScene2DEntity::ENTITY_RECT, false);
 	
 	
-
-	//obtain pointer to Box2D body object
-	body = sceneEntity->getFixture()->GetBody();
-	
 	//Set logger to output to file.  
 	logger = core->getServices()->getLogger();
 	logger->setLogToFile(true);
@@ -44,14 +40,14 @@ HelloPolycodeApp::HelloPolycodeApp(PolycodeView *view) {
 	*/
 }
 
-HelloPolycodeApp::~HelloPolycodeApp() {
+BlockTowerApp::~BlockTowerApp() {
 }
 
-bool HelloPolycodeApp::Update() {
-	
-	if(!body->IsAwake()) {
-		printf("Body not awake\n");
-	}
+bool BlockTowerApp::update() {
 	
     return core->updateAndRender();
+}
+
+void BlockTowerApp::buildTower(GAGenome &g) {
+	//nothing for now
 }
