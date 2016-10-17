@@ -13,6 +13,7 @@ public:
 private:
 	Core *core;
 	
+	Logger * logger;
 	
 	b2Body * body;
 };

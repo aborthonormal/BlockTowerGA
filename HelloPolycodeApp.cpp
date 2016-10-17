@@ -25,6 +25,12 @@ HelloPolycodeApp::HelloPolycodeApp(PolycodeView *view) {
 
 	//obtain pointer to Box2D body object
 	body = sceneEntity->getFixture()->GetBody();
+	
+	//Set logger to output to file.  
+	logger = core->getServices()->getLogger();
+	logger->setLogToFile(true);
+	
+	
 
 	/*
 	//Randomly generate rectanges and add to scene.  
@@ -42,19 +48,10 @@ HelloPolycodeApp::~HelloPolycodeApp() {
 }
 
 bool HelloPolycodeApp::Update() {
-    return core->updateAndRender();
-
-	Logger * logger = core->getServices()->getLogger();
-	
-	logger->logw("*");
-
-
-	if(!body->IsActive()) {
-		printf("Body not active\n");
-	}
 	
 	if(!body->IsAwake()) {
 		printf("Body not awake\n");
 	}
 	
+    return core->updateAndRender();
 }
