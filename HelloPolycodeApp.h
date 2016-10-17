@@ -12,4 +12,7 @@ public:
     
 private:
 	Core *core;
+	
+	
+	b2Body * body;
 };
