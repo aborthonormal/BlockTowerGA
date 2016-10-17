@@ -10,6 +10,12 @@ int main(int argc, char *argv[]) {
 	//Create new instance of app, using the created PolycodeView.  
 	BlockTowerApp *app = new BlockTowerApp(view);
 
+	
+
+
+	//Build the tower, based upon the genome.  
+	//app->buildTower(g);
+
 	//Run the app until exit. 
 	while(app->update()) {}
 

@@ -14,12 +14,19 @@ public:
     bool update();
    	
    	void buildTower(GAGenome &g);
+   	
+   	float objectiveFunction(GAGenome &);
+   	
+   	bool allBlocksAsleep();
     
     
 private:
 	Core *core;
-	Logger * logger;
+	PhysicsScene2D *scene;
+	Logger *logger;
 	
 	//Entities for tower's blocks which are added to scene
-	PhysicsScene2DEntity ** blockEntities;
+	PhysicsScene2DEntity **blockEntities;
+	
+	int numBlocks;
 };
