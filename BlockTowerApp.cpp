@@ -32,7 +32,7 @@ BlockTowerApp::BlockTowerApp(PolycodeView *view) {
 	logger->setLogToFile(true);
 	
 	
-	GA2DBinaryStringGenome genome(17, 10, objectiveFunction);
+	GA2DBinaryStringGenome genome(17, 10, this->objectiveFunction);
 }
 
 BlockTowerApp::~BlockTowerApp() {
