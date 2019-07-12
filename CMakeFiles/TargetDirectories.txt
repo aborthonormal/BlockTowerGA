@@ -1,0 +1,3 @@
+/Users/andrew.r.howard/Projects/BlockTowerGA/CMakeFiles/rebuild_cache.dir
+/Users/andrew.r.howard/Projects/BlockTowerGA/CMakeFiles/edit_cache.dir
+/Users/andrew.r.howard/Projects/BlockTowerGA/CMakeFiles/BlockTowerGA.dir

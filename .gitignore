@@ -1,3 +1,4 @@
 Makefile~
 *~
 *.log
+**/.DS_Store
