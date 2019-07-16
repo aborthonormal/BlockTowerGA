@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/BlockTowerGA.dir/src/main.cpp.o"
-  "BlockTowerGA.pdb"
-  "BlockTowerGA"
+  "bin/BlockTowerGA.pdb"
+  "bin/BlockTowerGA"
 )
 
 # Per-language clean rules from dependency scanning.
