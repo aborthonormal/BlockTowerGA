@@ -11,6 +11,8 @@ find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
+add_subdirectory(googletest)
+add_subdirectory(test)
 
 set(EXECUTABLE_OUTPUT_PATH "bin")
 
