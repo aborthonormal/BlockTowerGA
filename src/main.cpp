@@ -5,11 +5,12 @@
 
 #define PTM_RATIO 32.0
 
-int main()
-{
+SDL_Window *window; //display window
+SDL_Renderer *renderer; //window renderer
 
-    SDL_Window *window; //display window
-    SDL_Renderer *renderer; //window renderer
+int initWindow() {
+
+    int initStatus = 0;
 
     SDL_Init(SDL_INIT_VIDEO); // Initialize SDL2
 
@@ -28,15 +29,32 @@ int main()
     {
         // In the case that the window could not be made...
         printf("Could not create window: %s\n", SDL_GetError());
-        return 1;
+        initStatus = 1;
+    } else {
+        //initialize renderer
+        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
+        if(renderer == NULL) {
+            initStatus = 1;
+        }
     }
 
-    //initialize renderer
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    return initStatus;
+}
 
-    // sf::RenderWindow game(sf::VideoMode(800, 600, 32), "game");
-    // sf::Shape box = sf::Shape::Rectangle(0, 0, 10, 10, sf::Color(255,0,0));
-    // sf::Shape ground = sf::Shape::Rectangle(0,540,800,560,sf::Color(0,0,255));
+void closeWindow() {
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    renderer = NULL;
+    window = NULL;
+    SDL_Quit();
+}
+
+int main() {
+
+    if(initWindow() != 0) {
+        return 1;
+    }
 
     SDL_Rect box = {0, 0, 10, 10};
     SDL_Rect ground = {0, 540, 800, 560};
@@ -49,7 +67,6 @@ int main()
     world = new b2World(gravity);
     world->SetGravity(gravity);
 
-    
     b2Body *groundBody;
     b2BodyDef groundBodyDef;
     groundBodyDef.type = b2_staticBody;
@@ -150,12 +167,7 @@ int main()
         SDL_Delay(16);
     }
 
-    //destroy window
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    renderer = NULL;
-    window = NULL;
-    SDL_Quit();
+    closeWindow();
 
     return EXIT_SUCCESS;
 }
