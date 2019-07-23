@@ -2,6 +2,7 @@
 
 #include <Box2D/Box2D.h>
 #include "SDL.h"
+#include <OpenGL/gl.h>
 
 #define PTM_RATIO 32.0
 

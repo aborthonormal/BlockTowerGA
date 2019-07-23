@@ -11,13 +11,13 @@ find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
+find_package(OpenGL REQUIRED)
+
 add_subdirectory(googletest)
 add_subdirectory(test)
 
 set(EXECUTABLE_OUTPUT_PATH "bin")
+set(LIBRARIES ${SDL2_LIBRARIES} ${CMAKE_CURRENT_SOURCE_DIR}/../Box2D/build/bin/x86_64/Debug/libBox2D.a ${OPENGL_LIBRARY})
 
 add_executable(BlockTowerGA ${SRC_DIR}/main.cpp)
-target_link_libraries(BlockTowerGA ${SDL2_LIBRARIES})
-target_link_libraries(BlockTowerGA ${CMAKE_CURRENT_SOURCE_DIR}/../Box2D/build/bin/x86_64/Debug/libBox2D.a)
-
-#target_link_libraries(BlockTowerGA ${BOX2D_LIB})
+target_link_libraries(BlockTowerGA ${LIBRARIES})
