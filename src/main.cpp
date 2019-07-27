@@ -6,17 +6,24 @@
 
 #define PTM_RATIO 32.0
 
-SDL_Window *window; //display window
-SDL_Renderer *renderer; //window renderer
+SDL_Window *mainWindow;
+SDL_GLContext mainContext;
 
-int initWindow() {
+bool SetOpenGLAttributes();
+void PrintSDL_GL_Attributes();
+void CheckSDLError(int line);
+void RunGame();
+void Cleanup();
 
-    int initStatus = 0;
+bool initWindow() {
 
-    SDL_Init(SDL_INIT_VIDEO); // Initialize SDL2
+    if(SDL_Init(SDL_INIT_VIDEO) < 0) {
+        printf("Failed to init SDL\n");
+        return false;
+    } 
 
     // Create an application window with the following settings:
-    window = SDL_CreateWindow(
+    mainWindow = SDL_CreateWindow(
         "BlockTowerGA",          // window title
         SDL_WINDOWPOS_UNDEFINED, // initial x position
         SDL_WINDOWPOS_UNDEFINED, // initial y position
@@ -25,30 +32,75 @@ int initWindow() {
         SDL_WINDOW_OPENGL        // flags - see below
     );
 
-    // Check that the window was successfully created
-    if (window == NULL)
-    {
-        // In the case that the window could not be made...
-        printf("Could not create window: %s\n", SDL_GetError());
-        initStatus = 1;
-    } else {
-        //initialize renderer
-        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    // Check that everything worked out okay
+	if (!mainWindow)
+	{
+		std::cout << "Unable to create window\n";
+		CheckSDLError(__LINE__);
+		return false;
+	}
 
-        if(renderer == NULL) {
-            initStatus = 1;
-        }
-    }
+    // Create our opengl context and attach it to our window
+	mainContext = SDL_GL_CreateContext(mainWindow);
+	
+	SetOpenGLAttributes();
 
-    return initStatus;
+	// This makes our buffer swap syncronized with the monitor's vertical refresh
+	SDL_GL_SetSwapInterval(1);
+
+    return true;
+}
+
+bool SetOpenGLAttributes() {
+	// Set our OpenGL version.
+	// SDL_GL_CONTEXT_CORE gives us only the newer version, deprecated functions are disabled
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
+	// 3.2 is part of the modern versions of OpenGL, but most video cards whould be able to run it
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+
+	// Turn on double buffering with a 24bit Z buffer.
+	// You may need to change this to 16 or 32 for your system
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
+	return true;
 }
 
 void closeWindow() {
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    renderer = NULL;
-    window = NULL;
-    SDL_Quit();
+    // Delete our OpengL context
+	SDL_GL_DeleteContext(mainContext);
+
+	// Destroy our window
+	SDL_DestroyWindow(mainWindow);
+
+	// Shutdown SDL 2
+	SDL_Quit();
+}
+
+void CheckSDLError(int line = -1)
+{
+	std::string error = SDL_GetError();
+
+	if (error != "")
+	{
+		std::cout << "SLD Error : " << error << std::endl;
+
+		if (line != -1)
+			std::cout << "\nLine : " << line << std::endl;
+
+		SDL_ClearError();
+	}
+}
+
+void PrintSDL_GL_Attributes()
+{
+	int value = 0;
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &value);
+	std::cout << "SDL_GL_CONTEXT_MAJOR_VERSION : " << value << std::endl;
+
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &value);
+	std::cout << "SDL_GL_CONTEXT_MINOR_VERSION: " << value << std::endl;
 }
 
 int main() {
