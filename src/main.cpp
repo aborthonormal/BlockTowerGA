@@ -103,11 +103,23 @@ void PrintSDL_GL_Attributes()
 	std::cout << "SDL_GL_CONTEXT_MINOR_VERSION: " << value << std::endl;
 }
 
-int main() {
+int main(int argc, char *argv[])
+{
+	if (!initWindow())
+		return -1;
 
-    if(initWindow() != 0) {
-        return 1;
-    }
+	glClearColor(0.0, 0.0, 0.0, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
+	SDL_GL_SwapWindow(mainWindow);
+
+	RunGame();
+
+	closeWindow();
+
+	return 0;
+}
+
+void RunGame() {
 
     SDL_Rect box = {0, 0, 10, 10};
     SDL_Rect ground = {0, 540, 800, 560};
@@ -202,25 +214,23 @@ int main() {
         box.x = pos.x;
         box.y = pos.y;
 
-        //Clear the window
-        SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
-        SDL_RenderClear(renderer);
+        // //Clear the window
+        // SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
+        // SDL_RenderClear(renderer);
 
-        //draw box
-        SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0xFF );
-        SDL_RenderFillRect(renderer, &box);
+        // //draw box
+        // SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0xFF );
+        // SDL_RenderFillRect(renderer, &box);
 
-        //draw ground
-        SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF );
-        SDL_RenderFillRect(renderer, &ground);
+        // //draw ground
+        // SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF );
+        // SDL_RenderFillRect(renderer, &ground);
 
-        //update screen
-        SDL_RenderPresent(renderer);
+        // //update screen
+        // SDL_RenderPresent(renderer);
+
+        SDL_GL_SwapWindow(mainWindow);
 
         SDL_Delay(16);
     }
-
-    closeWindow();
-
-    return EXIT_SUCCESS;
 }
