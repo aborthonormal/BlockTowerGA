@@ -2,7 +2,10 @@
 
 #include <Box2D/Box2D.h>
 #include "SDL.h"
-#include <OpenGL/gl.h>
+
+// OpenGL / glew Headers
+#define GL3_PROTOTYPES 1
+#include <GL/glew.h>
 
 #define PTM_RATIO 32.0
 
@@ -43,6 +46,9 @@ bool initWindow() {
     // Create our opengl context and attach it to our window
 	mainContext = SDL_GL_CreateContext(mainWindow);
 	
+    glewExperimental = GL_TRUE;
+    glewInit();
+
 	SetOpenGLAttributes();
 
 	// This makes our buffer swap syncronized with the monitor's vertical refresh
@@ -95,18 +101,21 @@ void CheckSDLError(int line = -1)
 
 void PrintSDL_GL_Attributes()
 {
-	int value = 0;
-	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &value);
-	std::cout << "SDL_GL_CONTEXT_MAJOR_VERSION : " << value << std::endl;
+	int major = 0;
+	int minor = 0;
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &major);
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &minor);
 
-	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &value);
-	std::cout << "SDL_GL_CONTEXT_MINOR_VERSION: " << value << std::endl;
+	std::cout << "OpenGL Version: " << major << "." << minor << std::endl;
 }
 
 int main(int argc, char *argv[])
 {
-	if (!initWindow())
+	if (!initWindow()) {
 		return -1;
+    }
+
+    PrintSDL_GL_Attributes();
 
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -170,9 +179,9 @@ void RunGame() {
     fixtureDef.friction = 1.0f;
     fixtureDef.restitution = 0.5f;
 
-    b2MassData data;
-    data.mass = 10;
-    Body->SetMassData(&data);
+    // b2MassData data;
+    // data.mass = 10;
+    // Body->SetMassData(&data);
     Body->CreateFixture(&fixtureDef);
 
     float timeStep = 1.0f / 300.0f;
@@ -214,9 +223,11 @@ void RunGame() {
         box.x = pos.x;
         box.y = pos.y;
 
-        // //Clear the window
-        // SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
-        // SDL_RenderClear(renderer);
+        //Clear window to white
+        glClearColor(1.0, 1.0, 1.0, 1.0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glColor3f(1.0, 0.0, 0.0);
 
         // //draw box
         // SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0xFF );
