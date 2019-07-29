@@ -228,6 +228,8 @@ void RunGame() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glColor3f(1.0, 0.0, 0.0);
+        // glRecti(0, 540, 800, 560);
+        glRecti(0, 0, 1, 1);
 
         // //draw box
         // SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0xFF );
